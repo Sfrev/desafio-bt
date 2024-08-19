@@ -10,7 +10,8 @@ namespace desafio_bt
     {
         static void Main(string[] args)
         {
-            int intervaloRequisicao = 4 * 60;
+            // Intervalo baseado no número de requisições máximos gratuitos à API e ao servidor SMTP
+            int intervaloRequisicao = 4 * 60; // intervalos de 4 minutos
             if (args.Length != 3)
             {
                 Console.WriteLine("Programa precisa ser executado com 3 argumentos:");
@@ -44,12 +45,13 @@ namespace desafio_bt
                 Task<String> result = GetJsonFromRequest(ativo, config.GetToken());
                 if (result != null) 
                 {
+                    Console.WriteLine("Verificando preço da ação");
                     float precoAtual = GetPrecoAtualAtivo(result.Result);
                     if (precoAtual < 0f)
                     {
                         Console.WriteLine("Erro ao verificar o preço da ação");
                     }
-                    if (precoAtual < precoCompra)
+                    else if (precoAtual < precoCompra)
                     {
                         EnviarEmail(true, config, ativo, precoAtual, precoCompra);
                         Console.WriteLine($"Email enviado para comprar ativo com o valor R${precoAtual}");
@@ -58,6 +60,10 @@ namespace desafio_bt
                     {
                         EnviarEmail(false, config, ativo, precoAtual, precoVenda);
                         Console.WriteLine($"Email enviado para vender ativo com o valor R${precoAtual}");
+                    }
+                    else
+                    {
+                        Console.WriteLine($"Preço da ação: R${precoAtual}");
                     }
                 }
 
