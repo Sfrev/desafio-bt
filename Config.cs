@@ -13,5 +13,25 @@
         {
             return token;
         }
+        public String GetDestinationEmail()
+        {
+            return destinationEmail;
+        }
+        public String GetHost()
+        {
+            return host;
+        }
+        public int GetPort()
+        {
+            return port;
+        }
+        public string GetUsername()
+        {
+            return username;
+        }
+        public string GetPassword()
+        {
+            return password;
+        }
     }
 }
